@@ -1,8 +1,19 @@
-var ROW_TAP_TIME = 1
-var SPACE_COUNT = 2
+var DEBUG = 1;
+var ROW_TAP_TIME = 1;
+var SPACE_COUNT = 2;
+var WAIT_TIME = 2;
+var WELCOME_MOVE_UP = 1;
+
 var $RESUME_PANEL = $(".resume-panel");
 var $CSS_PANEL = $(".css-code-panel");
 var timeline = new TimelineLite();
+
+
+if (DEBUG) {
+    ROW_TAP_TIME = 0;
+    WAIT_TIME = 0;
+    WELCOME_MOVE_UP = 0;
+}
 
 $(function() {
 
@@ -25,12 +36,29 @@ $CSS_PANEL.hidePanel = function() {
 ////////////////////////////////////////////////////////////////////////
 
 function init() {
+    // 开场 - 欢迎语
     writeWelcome();
+    wait(WAIT_TIME)
+
+    // 准备开始 - 欢迎语归顶，弹出css面板
     changeLayoutReadyToStart();
 
+    // 写css - 基础，背景，颜色，字号
+    writeCommentBlock(['白色有点刺眼，先减低一个色调，', '背景和文字看起来舒服些！']);
+    writeClassBlock('html', { background: '#eee', color: '#333' });
+    timeline.call(function() { writeStyle('html{background: #eee; color: #333}') });
 
-    writeCommentBlock(['加一个背景', '测试一下']);
-    writeClassBlock('html', { background: '#FA0033' });
+    // 写css - css面板
+
+    // 写css - 欢迎语
+
+    // 写简历
+    writeResume();
+
+    // 写css - 简历
+
+    // 隐藏css面板
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -124,12 +152,15 @@ function writeEnd(tl) {
 
 }
 
-function writeClassBlock(name, kvs) {
+function writeClassBlock(name, kvs /*, callback*/ ) {
     writeSelector(name)
     for (var key in kvs) {
         writePropVal(SPACE_COUNT, key, kvs[key])
     }
     writeEnd()
+        // timeline.call(function() {
+        //     callback && callback();
+        // })
 }
 
 function writeCommentBlock(comments) {
@@ -147,34 +178,100 @@ function writeWelcome() {
         '此时我的心情有点High~只能用代码表达一下。'
     ];
 
-    words.forEach(function(word){
-        writeWords(word);
+    words.forEach(function(word) {
+        writeP(word, '.welcome');
     });
 
-    timeline.call(function(){
-        $RESUME_PANEL.addClass('high-up')
-    })
+    timeline.call(function() {
+        if(!DEBUG) $RESUME_PANEL.addClass('high-up')
+    });
 }
 
-function writeWords(words, tl) {
-    if (!tl) tl = timeline;
+
+function writeResume() {
+
+    var p, h, panel = '.resume';
+
+    h = '我';
+    p = '董文枭，英文名叫victor，是一名codemonkey。' +
+        '近一年多以来在用户体验部做WEB前端工作，专门给各个产品线卖手腕子，' +
+        '如：导航系列的金山毒霸、金山影视、金山购物等；' +
+        '数据类的Libra、智库官网；各种内嵌H5、活动H5...' +
+        '近期有在支持PhotoGrid、Launcher的网页项目。';
+    writeH(h, panel);
+    writeP(p, panel);
+
+    h = '技术贡献';
+    p = '半年前发现我们的技术架构有些落后，我，决定做一次改变。' +
+        '让网页能做到：SEO、SPA、按需加载、ES7、实时打包、多语言、React、PWA、CDN 等等，' +
+        '这些技术点都能同时实现，并且前端可以做到iOS、Android、H5使用同一套代码逻辑，一键跨平台发布，' +
+        '达到全球领先的WEB前端水平。' +
+        '国内还没有发现（SEO、SPA、按需加载）同时实现的项目，PhotoGrid网页版可以！';
+    writeH(h, panel);
+    writeP(p, panel);
+
+    h = '猎豹活动';
+    p = '2015年5月加入猎豹，参加新员工培训，带队“六月豹”获得团队第一。<br>' +
+        '2015年11月报名傅盛战队，海选通过（内部透露6500项目，200强）。<br>' +
+        '2016年1月参加豹厂“豹动”活动，5人5项挑战连胜，与团队获得最佳豹动奖。';
+    writeH(h, panel);
+    writeP(p, panel);
+
+    h = '结语';
+    p = '本次介绍程序，策划-开发-上线用了2天时间。' +
+        '感谢胡欣的特效、xx的设计。' +
+        '这就是我 - 有想法、会技术、擅协作。';
+    writeH(h, panel);
+    writeP(p, panel);
+
+}
+
+function writeP(text, panelClass) {
+    var tl = timeline;
 
     var $row = row();
+    var $p = $('<p>');
+    $row.append($p);
 
     tl.call(function() {
-        $RESUME_PANEL.append($row);
+        $RESUME_PANEL.find(panelClass).append($row);
     });
 
-    tl.to($row, ROW_TAP_TIME, { text: words });
+    tl.to($p, ROW_TAP_TIME, { text: text });
 }
 
-function changeLayoutReadyToStart(){
-    timeline.call(function(){
-        $RESUME_PANEL.removeClass('before-start');
-    }, null, null, '+=1')
+function writeH(title, panelClass) {
+    var tl = timeline;
 
-    timeline.call(function(){
+    var $row = row();
+    var $h = $('<h1>');
+    $row.append($h);
+
+    tl.call(function() {
+        $RESUME_PANEL.find(panelClass).append($row);
+    });
+
+    tl.to($h, ROW_TAP_TIME, { text: title });
+}
+
+function changeLayoutReadyToStart() {
+    // timeline.call(function() {
+    //     $RESUME_PANEL.removeClass('before-start');
+    // }, null, null, '+=1')
+    timeline.to($RESUME_PANEL, WELCOME_MOVE_UP, { padding: '0 10' });
+
+    timeline.call(function() {
         $CSS_PANEL.showPanel();
-    }, null, null, '+=1')
-    
+    }, null, null, '+=' + WELCOME_MOVE_UP)
+
+}
+
+function writeStyle(css) {
+    var tag = $('<style>').html(css)
+    $('head').append(tag)
+}
+
+function wait(time) {
+    // timeline.duration(time);
+    timeline.to($CSS_PANEL, time, { opacity: 1 })
 }
