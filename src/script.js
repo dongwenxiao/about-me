@@ -286,7 +286,7 @@ function writeCommentBlock(comments) {
 
 function writeWelcome() {
     var words = [
-        'Thank you for your coming!',
+        'Welcome!',
         '感谢公司和看到页面的你，让我能有机会参与到这次首席门徒的竞选。',
         '此时我的心情有点High~只能用代码表达一下。！@_@ 翻个跟头，嘚瑟一下'
     ];
@@ -330,7 +330,7 @@ function writeResume(callback) {
     var p, h, panel = '.resume';
 
     h = '我';
-    p = '董文枭，英文名叫victor，是一名codemonkey。' +
+    p = '董文枭，英文名叫Victor，是一名Codemonkey。' +
         '2010年毕业于黑龙江科技大学计算机科学与技术专业。' +
         '在校期间参加过几次编程比赛，获过一等奖、二等奖。';
     writeH(h, panel);
@@ -349,7 +349,7 @@ function writeResume(callback) {
 
     h = '技术贡献';
     p = '半年前发现我们的技术架构有些落后，我决定做一次改变。' +
-        '让网页能做到：SEO、SPA、按需加载、ES7、实时打包、多语言、React、PWA、CDN 等等，' +
+        '让网页能做到SEO、SPA、按需加载、ES7、实时打包、多语言、React、PWA、CDN 等等，' +
         '这些技术点都能同时实现，并且前端可以做到iOS、Android、H5使用同一套代码逻辑，一键跨平台发布，' +
         '达到全球领先的WEB前端水平。' +
         '国内还没有发现（SEO、SPA、按需加载）同时实现的项目，PhotoGrid网页版可以！';
@@ -360,7 +360,7 @@ function writeResume(callback) {
     h = '参与活动';
     p = '2015年5月加入猎豹，参加新员工培训，带队“六月豹”获得团队第一。<br>' +
         '2015年11月报名傅盛战队，海选通过（内部透露6500项目，200强）。<br>' +
-        '2016年1月参加豹厂“豹动”活动，5人5项挑战连胜，与团队获得最佳豹动奖。';
+        '2016年1月参加豹厂“豹动”活动，5人5项挑战连胜，”东北大呲花“获得最佳豹动奖。';
     writeH(h, panel);
     writeP(p, panel);
 
@@ -382,7 +382,7 @@ function writeResume(callback) {
 
     h = '结语';
     p = '本次介绍程序，策划-开发-上线用了2天时间。<br>' +
-        '感谢: <br>胡欣的特效<br>飞宇的设计<br>Alex的纠错。';
+        '感谢: <br>胡欣的特效，<br>飞宇的设计，<br>Alex的纠错。';
     writeH(h, panel);
     writeP(p, panel);
 
