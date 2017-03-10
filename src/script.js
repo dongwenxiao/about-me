@@ -370,7 +370,7 @@ function writeResume(callback) {
         'I followed the company from "复兴国际" to "豹厂" and witnessed a great progress happened ' +
         'in this two years. Such as now we have a wonderful and internationalization workplace, ' +
         'and complete a series of successful cases in commercialization. ' +
-        'Like piano tiled 2 , from 0 to 1, achieve top 10 most popular apps.' +
+        'Like PianoTiled 2 , from 0 to 1, achieve top 10 most popular apps.' +
         'Live.me has been one of mainstream live video platform in the whole world,' +
         'and NewsRepublic also showed an excellent result in global content market. ' +
         'Although we faced a big challenge last year, I believe Mr. Fu will lead us, ' +
